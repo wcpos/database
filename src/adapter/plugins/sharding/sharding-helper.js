@@ -1,0 +1,1 @@
+export function getShardIndex(r,t){return hashStringToNumber(t)%r.length}export function hashStringToNumber(r){var t,e=0;if(0===r.length)throw new Error("empty string");for(t=0;t<r.length;t++)e=(e<<5)-e+r.charCodeAt(t),e|=0;return e<0&&(e*=-1),e}
