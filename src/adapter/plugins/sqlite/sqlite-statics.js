@@ -34,7 +34,6 @@ export var RxStorageSQLiteStatics = {
 		s = s !== '()' ? ` AND ${s} ` : '';
 		let c = '';
 		t.index && (c = `INDEXED BY "${u(t.index)}"`);
-		debugger;
 		return {
 			schema: r,
 			mangoQuery: e(t),
