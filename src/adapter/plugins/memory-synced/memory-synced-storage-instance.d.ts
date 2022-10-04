@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import type { RxStorageMemorySynced } from './index';
 import { MemorySyncedInstanceCreationOptions, MemorySyncedStorageInternals } from './memory-synced-types';
 export declare class MemorySyncedRxStorageInstance<RxDocType> implements RxStorageInstance<RxDocType, MemorySyncedStorageInternals<RxDocType>, MemorySyncedInstanceCreationOptions, RxStorageDefaultCheckpoint> {
-    readonly storage: RxStorageMemorySynced<RxDocType>;
+    readonly storage: RxStorageMemorySynced;
     readonly databaseName: string;
     readonly collectionName: string;
     readonly schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>;
@@ -13,7 +13,7 @@ export declare class MemorySyncedRxStorageInstance<RxDocType> implements RxStora
     closed: boolean;
     pendingWrites: Map<string, BulkWriteRow<RxDocType>>;
     persistingWritesQueue: Promise<any>;
-    constructor(storage: RxStorageMemorySynced<RxDocType>, databaseName: string, collectionName: string, schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>, internals: MemorySyncedStorageInternals<RxDocType>, options: Readonly<MemorySyncedInstanceCreationOptions>);
+    constructor(storage: RxStorageMemorySynced, databaseName: string, collectionName: string, schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>, internals: MemorySyncedStorageInternals<RxDocType>, options: Readonly<MemorySyncedInstanceCreationOptions>);
     bulkWrite(documentWrites: BulkWriteRow<RxDocType>[], context: string): Promise<RxStorageBulkWriteResponse<RxDocType>>;
     findDocumentsById(ids: string[], withDeleted: boolean): Promise<{
         [documentId: string]: RxDocumentData<RxDocType>;

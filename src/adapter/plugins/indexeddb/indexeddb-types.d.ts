@@ -1,5 +1,4 @@
-import type { RxJsonSchema } from 'rxdb';
-import type { DexiePreparedQuery } from 'rxdb/dist/types/types';
+import type { RxJsonSchema, DexiePreparedQuery } from 'rxdb';
 import type { RxStorageIndexedDB } from '.';
 /**
  * @link https://developer.mozilla.org/en-US/docs/Web/API/IDBTransaction/durability
