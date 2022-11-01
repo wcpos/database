@@ -1,4 +1,5 @@
 import { RxJsonSchema, RxStorageInstanceCreationParams, RxStorageInstance, EventBulk, RxStorageChangeEvent, RxDocumentData, BulkWriteRow, RxStorageBulkWriteResponse, RxStorageQueryResult, StringKeys, RxConflictResultionTask, RxConflictResultionTaskSolution, RxStorageDefaultCheckpoint } from 'rxdb';
+import { RxStorageCountResult } from 'rxdb/dist/types/types';
 import { Observable } from 'rxjs';
 import type { RxStorageSQLite } from './';
 import type { SQLiteBasics, SQLiteChangesCheckpoint, SQLiteInstanceCreationOptions, SQLiteInternals, SQLitePreparedQuery, SQLiteStorageSettings } from './sqlite-types';
@@ -21,6 +22,7 @@ export declare class RxStorageInstanceSQLite<RxDocType> implements RxStorageInst
      */
     bulkWrite(documentWrites: BulkWriteRow<RxDocType>[], context: string): Promise<RxStorageBulkWriteResponse<RxDocType>>;
     query(preparedQuery: SQLitePreparedQuery<RxDocType>): Promise<RxStorageQueryResult<RxDocType>>;
+    count(preparedQuery: SQLitePreparedQuery<RxDocType>): Promise<RxStorageCountResult>;
     findDocumentsById(ids: string[], withDeleted: boolean): Promise<{
         [documentId: string]: RxDocumentData<RxDocType>;
     }>;

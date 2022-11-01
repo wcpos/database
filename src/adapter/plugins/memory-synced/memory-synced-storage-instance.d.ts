@@ -1,4 +1,5 @@
 import { BulkWriteRow, EventBulk, RxDocumentData, RxJsonSchema, RxStorageBulkWriteResponse, RxStorageChangeEvent, RxStorageInstance, RxStorageQueryResult, StringKeys, RxConflictResultionTask, RxConflictResultionTaskSolution, RxStorageDefaultCheckpoint } from 'rxdb';
+import { RxStorageCountResult } from 'rxdb/dist/types/types';
 import { Observable } from 'rxjs';
 import type { RxStorageMemorySynced } from './index';
 import { MemorySyncedInstanceCreationOptions, MemorySyncedStorageInternals } from './memory-synced-types';
@@ -19,6 +20,7 @@ export declare class MemorySyncedRxStorageInstance<RxDocType> implements RxStora
         [documentId: string]: RxDocumentData<RxDocType>;
     }>;
     query(preparedQuery: any): Promise<RxStorageQueryResult<RxDocType>>;
+    count(preparedQuery: any): Promise<RxStorageCountResult>;
     getAttachmentData(documentId: string, attachmentId: string): Promise<string>;
     getChangedDocumentsSince(limit: number, checkpoint?: RxStorageDefaultCheckpoint): Promise<{
         documents: RxDocumentData<RxDocType>[];

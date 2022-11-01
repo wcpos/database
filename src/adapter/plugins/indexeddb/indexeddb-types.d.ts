@@ -11,7 +11,7 @@ export declare type IndexedDBStorageSettings = {
      * but in Node.js or for testing, the used IndexeDB can be overwritten.
      */
     indexedDB: IDBFactory;
-    IDBKeyRange: IDBKeyRange;
+    IDBKeyRange: typeof IDBKeyRange;
     transactionDurability: IndexedDBTransactionDurability;
     /**
      * When the runtime supports the getAll() method,

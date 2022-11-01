@@ -1,4 +1,5 @@
 import { BulkWriteRow, EventBulk, RxConflictResultionTask, RxConflictResultionTaskSolution, RxDocumentData, RxJsonSchema, RxStorage, RxStorageBulkWriteResponse, RxStorageChangeEvent, RxStorageInstance, RxStorageQueryResult } from 'rxdb';
+import { RxStorageCountResult } from 'rxdb/dist/types/types';
 import { Observable } from 'rxjs';
 import { ShardingChangesCheckpoint, ShardingPreparedQuery, ShardingStorageInternals } from './sharding-types';
 export declare class RxStorageInstanceSharding<RxDocType> implements RxStorageInstance<RxDocType, ShardingStorageInternals, any, ShardingChangesCheckpoint> {
@@ -16,6 +17,7 @@ export declare class RxStorageInstanceSharding<RxDocType> implements RxStorageIn
         [documentId: string]: RxDocumentData<RxDocType>;
     }>;
     query(preparedQuery: ShardingPreparedQuery<RxDocType>): Promise<RxStorageQueryResult<RxDocType>>;
+    count(preparedQuery: ShardingPreparedQuery<RxDocType>): Promise<RxStorageCountResult>;
     getChangedDocumentsSince(limit: number, checkpoint?: ShardingChangesCheckpoint): Promise<{
         documents: RxDocumentData<RxDocType>[];
         checkpoint: ShardingChangesCheckpoint;

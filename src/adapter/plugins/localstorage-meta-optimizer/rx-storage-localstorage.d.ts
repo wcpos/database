@@ -1,4 +1,5 @@
 import { BulkWriteRow, ById, EventBulk, RxDocumentData, RxJsonSchema, RxStorage, RxStorageBulkWriteResponse, RxStorageChangeEvent, RxStorageDefaultCheckpoint, RxStorageInstance, RxStorageInstanceCreationParams, RxStorageQueryResult, RxStorageStatics, StringKeys, RxConflictResultionTask, RxConflictResultionTaskSolution, DexiePreparedQuery } from 'rxdb';
+import { RxStorageCountResult } from 'rxdb/dist/types/types';
 import { Observable } from 'rxjs';
 export declare const RX_STORAGE_NAME_LOCALSTORAGE = "localstorage";
 export declare type LocalstorageStorageInternals<RxDocType = any> = {
@@ -50,6 +51,7 @@ export declare class RxStorageInstanceLocalstorage<RxDocType> implements RxStora
         [documentId: string]: RxDocumentData<RxDocType>;
     }>;
     query(preparedQuery: LocalstoragePreparedQuery<RxDocType>): Promise<RxStorageQueryResult<RxDocType>>;
+    count(preparedQuery: LocalstoragePreparedQuery<RxDocType>): Promise<RxStorageCountResult>;
     getChangedDocumentsSince(limit: number, checkpoint?: RxStorageDefaultCheckpoint): Promise<{
         documents: RxDocumentData<RxDocType>[];
         checkpoint: RxStorageDefaultCheckpoint;

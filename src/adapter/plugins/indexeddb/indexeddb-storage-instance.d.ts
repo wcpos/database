@@ -2,6 +2,7 @@ import { BulkWriteRow, EventBulk, RxConflictResultionTask, RxConflictResultionTa
 import { Observable } from 'rxjs';
 import type { RxStorageIndexedDB } from '.';
 import type { IndexedDBChangesCheckpoint, IndexedDBInstanceCreationOptions, IndexedDBPreparedQuery, IndexedDBStorageInternals, IndexedDBStorageSettings } from './indexeddb-types';
+import { RxStorageCountResult } from 'rxdb/dist/types/types';
 export declare class RxStorageInstanceIndexedDB<RxDocType> implements RxStorageInstance<RxDocType, IndexedDBStorageInternals, IndexedDBInstanceCreationOptions, RxStorageDefaultCheckpoint> {
     readonly storage: RxStorageIndexedDB;
     readonly databaseName: string;
@@ -20,6 +21,7 @@ export declare class RxStorageInstanceIndexedDB<RxDocType> implements RxStorageI
         [documentId: string]: RxDocumentData<RxDocType>;
     }>;
     query(preparedQuery: IndexedDBPreparedQuery<RxDocType>): Promise<RxStorageQueryResult<RxDocType>>;
+    count(preparedQuery: IndexedDBPreparedQuery<RxDocType>): Promise<RxStorageCountResult>;
     getChangedDocumentsSince(limit: number, checkpoint?: IndexedDBChangesCheckpoint): Promise<{
         documents: RxDocumentData<RxDocType>[];
         checkpoint: IndexedDBChangesCheckpoint;
