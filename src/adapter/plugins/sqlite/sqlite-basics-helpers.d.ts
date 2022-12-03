@@ -8,4 +8,7 @@ export declare function closeSQLiteDatabaseNode(database: SQLiteDatabaseClass): 
 declare type SQLiteCapacitorDatabase = any;
 declare type SQLiteConnection = any;
 export declare function getSQLiteBasicsCapacitor(sqlite: SQLiteConnection, capacitorCore: any): SQLiteBasics<SQLiteCapacitorDatabase>;
+declare type SQLiteQuickDatabase = any;
+export declare const EMPTY_FUNCTION: () => void;
+export declare function getSQLiteBasicsQuickSQLite(openDB: any): SQLiteBasics<SQLiteQuickDatabase>;
 export {};
