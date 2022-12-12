@@ -1,0 +1,1 @@
+import{getRxStorageIndexedDB as o}from"../plugins/indexeddb";import{exposeSharedWorkerRxStorage as r}from"../plugins/worker";console.log("INSIDE OF SHARED WORKER"),r({storage:o()});

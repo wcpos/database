@@ -7,6 +7,12 @@ export declare const TRANSACTION_SETTINGS: {
     durability: string;
 };
 export declare const RX_STORAGE_NAME_INDEXEDDB = "indexeddb";
+export declare const RxStorageIndexedDBStatics: Readonly<{
+    prepareQuery<RxDocType>(schema: RxJsonSchema<import("rxdb").RxDocumentData<RxDocType>>, mutateableQuery: import("rxdb").FilledMangoQuery<RxDocType>): any;
+    getSortComparator<RxDocType_1>(schema: RxJsonSchema<import("rxdb").RxDocumentData<RxDocType_1>>, preparedQuery: any): import("event-reduce-js").DeterministicSortComparator<RxDocType_1>;
+    getQueryMatcher<RxDocType_2>(schema: RxJsonSchema<import("rxdb").RxDocumentData<RxDocType_2>>, preparedQuery: any): import("event-reduce-js").QueryMatcher<import("rxdb").RxDocumentData<RxDocType_2>>;
+    checkpointSchema: import("rxdb").DeepReadonlyObject<import("rxdb").JsonSchema<any>>;
+}>;
 export declare function attachmentObjectId(documentId: string, attachmentId: string): string;
 export declare function getIndexedDBState(storage: RxStorageIndexedDB, settings: IndexedDBStorageSettings, databaseName: string, 
 /**

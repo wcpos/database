@@ -15,7 +15,14 @@ export declare type SQLiteBasics<SQLiteDatabaseType> = {
     /**
      * Returns the query result rows
      */
-    all(db: SQLiteDatabaseType, queryWithParams: SQLiteQueryWithParams): Promise<any[]>;
+    all(db: SQLiteDatabaseType, queryWithParams: SQLiteQueryWithParams): Promise<{
+        id: string;
+        /**
+         * Because we store the documeent fields as json,
+         * just return a string here.
+         */
+        data: string;
+    }[]>;
     /**
      * Run a query. Return nothing.
      */
