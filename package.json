@@ -26,7 +26,7 @@
 		"random-token": "^0.0.8",
 		"react": "18.1.0",
 		"rxdb": "13.15.2",
-		"rxjs": "7.6.0"
+		"rxjs": "7.8.0"
 	},
 	"devDependencies": {
 		"@types/jest": "^29.2.4",
