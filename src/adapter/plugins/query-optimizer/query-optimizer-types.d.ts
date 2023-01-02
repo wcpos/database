@@ -1,5 +1,5 @@
 import type { MangoQuery, RxJsonSchema, RxStorage } from 'rxdb';
-export declare type FindBestIndexInput<RxDocType, InstanceCreationOptions> = {
+export type FindBestIndexInput<RxDocType, InstanceCreationOptions> = {
     storage: RxStorage<any, InstanceCreationOptions>;
     schema: RxJsonSchema<RxDocType>;
     /**
@@ -19,14 +19,14 @@ export declare type FindBestIndexInput<RxDocType, InstanceCreationOptions> = {
     maxFieldsPerIndex?: number;
     instanceCreationOptions?: InstanceCreationOptions;
 };
-export declare type IndexTimeMeasurement = {
+export type IndexTimeMeasurement = {
     index: string[];
     /**
      * Lower is better
      */
     time: number;
 };
-export declare type FindBestIndexOutput<RxDocType> = {
+export type FindBestIndexOutput<RxDocType> = {
     queries: {
         [queryId: string]: {
             query: MangoQuery<RxDocType>;

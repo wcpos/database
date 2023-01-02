@@ -1,5 +1,5 @@
 import { FilledMangoQuery, PreparedQuery, RxDocumentData, RxJsonSchema, RxStorage, RxStorageInstance, RxStorageInstanceCreationParams } from 'rxdb';
-export declare type LocalstorageMetaOptimizerRxStorageSettings = {
+export type LocalstorageMetaOptimizerRxStorageSettings = {
     storage: RxStorage<any, any>;
 };
 export declare function getLocalstorageMetaOptimizerRxStorage(settings: LocalstorageMetaOptimizerRxStorageSettings): RxStorageLocalstorageMetaOptimized;

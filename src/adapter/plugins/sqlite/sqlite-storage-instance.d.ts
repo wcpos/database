@@ -1,5 +1,4 @@
-import { RxJsonSchema, RxStorageInstanceCreationParams, RxStorageInstance, EventBulk, RxStorageChangeEvent, RxDocumentData, BulkWriteRow, RxStorageBulkWriteResponse, RxStorageQueryResult, StringKeys, RxConflictResultionTask, RxConflictResultionTaskSolution, RxStorageDefaultCheckpoint } from 'rxdb';
-import { RxStorageCountResult } from 'rxdb/dist/types/types';
+import { RxJsonSchema, RxStorageInstanceCreationParams, RxStorageInstance, EventBulk, RxStorageChangeEvent, RxDocumentData, BulkWriteRow, RxStorageBulkWriteResponse, RxStorageQueryResult, StringKeys, RxConflictResultionTask, RxConflictResultionTaskSolution, RxStorageDefaultCheckpoint, RxStorageCountResult } from 'rxdb';
 import { Observable } from 'rxjs';
 import type { RxStorageSQLite } from './';
 import type { SQLiteBasics, SQLiteChangesCheckpoint, SQLiteInstanceCreationOptions, SQLiteInternals, SQLitePreparedQuery, SQLiteStorageSettings } from './sqlite-types';

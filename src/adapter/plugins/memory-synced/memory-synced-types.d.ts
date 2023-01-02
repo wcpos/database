@@ -1,6 +1,6 @@
 import type { RxConflictResultionTask, RxConflictResultionTaskSolution, RxStorage, RxStorageInstance, RxStorageInstanceReplicationState, RxStorageReplicationMeta } from 'rxdb';
 import { Subject } from 'rxjs';
-export declare type MemorySyncedStorageSettings = {
+export type MemorySyncedStorageSettings = {
     storage: RxStorage<any, any>;
     /**
      * Defines how many document
@@ -28,7 +28,7 @@ export declare type MemorySyncedStorageSettings = {
      */
     waitBeforePersist?: () => Promise<any>;
 };
-export declare type MemorySyncedStorageInternals<RxDocType> = {
+export type MemorySyncedStorageInternals<RxDocType> = {
     masterInstancePromise: Promise<RxStorageInstance<RxDocType, any, any>>;
     metaInstancePromise: Promise<RxStorageInstance<RxStorageReplicationMeta, any, any>>;
     forkInstance: RxStorageInstance<RxDocType, any, any>;
@@ -41,4 +41,4 @@ export declare type MemorySyncedStorageInternals<RxDocType> = {
     conflictTasks$: Subject<RxConflictResultionTask<RxDocType>>;
     resolvedConflictTasks$: Subject<RxConflictResultionTaskSolution<RxDocType>>;
 };
-export declare type MemorySyncedInstanceCreationOptions = {};
+export type MemorySyncedInstanceCreationOptions = {};

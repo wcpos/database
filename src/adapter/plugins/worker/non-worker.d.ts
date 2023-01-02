@@ -8,7 +8,7 @@ declare type RxStorageWorkerSettings = {
      */
     workerInput: string | any;
 };
-export declare type RxStorageWorker = RxStorageRemote;
+export type RxStorageWorker = RxStorageRemote;
 export declare function getRxStorageSharedWorker(settings: RxStorageWorkerSettings): RxStorageWorker;
 export declare function getWorkerStateByInput(workerInput: RxStorageWorkerSettings['workerInput']): RxStorageRemoteSettings;
 export {};

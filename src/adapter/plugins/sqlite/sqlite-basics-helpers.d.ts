@@ -5,10 +5,10 @@ export declare function getSQLiteBasicsNode(sqlite3: Sqlite3Type): SQLiteBasics<
  */
 export declare function execSqlSQLiteNode(database: SQLiteDatabaseClass, queryWithParams: SQLiteQueryWithParams, operator: 'run' | 'all'): any;
 export declare function closeSQLiteDatabaseNode(database: SQLiteDatabaseClass): Promise<void>;
-declare type SQLiteCapacitorDatabase = any;
-declare type SQLiteConnection = any;
+type SQLiteCapacitorDatabase = any;
+type SQLiteConnection = any;
 export declare function getSQLiteBasicsCapacitor(sqlite: SQLiteConnection, capacitorCore: any): SQLiteBasics<SQLiteCapacitorDatabase>;
-declare type SQLiteQuickDatabase = any;
+type SQLiteQuickDatabase = any;
 export declare const EMPTY_FUNCTION: () => void;
 export declare function getSQLiteBasicsQuickSQLite(openDB: any): SQLiteBasics<SQLiteQuickDatabase>;
 export declare function getSQLiteBasicsExpoSQLite(openDB: any, 

@@ -1,11 +1,11 @@
 import type { RxStorage, RxStorageInstance, FilledMangoQuery } from 'rxdb';
-export declare type RxStorageShardingSettings = {
+export type RxStorageShardingSettings = {
     /**
      * The parent RxStorage implementation.
      */
     storage: RxStorage<any, any>;
 };
-export declare type RxStorageShardingIOnstanceCreationOptions = {
+export type RxStorageShardingIOnstanceCreationOptions = {
     /**
      * The instance creation options
      * that will be passed to the original RxStorage,
@@ -13,10 +13,10 @@ export declare type RxStorageShardingIOnstanceCreationOptions = {
      */
     parentOptions: any;
 };
-export declare type ShardingStorageInternals = {
+export type ShardingStorageInternals = {
     shardInstances: RxStorageInstance<any, any, any>[];
 };
-export declare type ShardingPreparedQuery<RxDocType> = {
+export type ShardingPreparedQuery<RxDocType> = {
     originalQuery: FilledMangoQuery<RxDocType>;
     parentPreparedQuery: any;
 };
@@ -25,6 +25,6 @@ export declare type ShardingPreparedQuery<RxDocType> = {
  * in the correct shard index order.
  * Indexed by the shardId
  */
-export declare type ShardingChangesCheckpoint = {
+export type ShardingChangesCheckpoint = {
     [shardId: number]: any;
 };

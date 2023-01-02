@@ -5,9 +5,9 @@ import type { MangoQuery, RxDocumentData, RxJsonSchema } from 'rxdb';
  * even if the users uses another SQLite implementation.
  * Therefore we just use the any type instead the one imported from 'sqlite3';
  */
-export declare type Sqlite3Type = any;
-export declare type SQLiteDatabaseClass = any;
-export declare type SQLiteBasics<SQLiteDatabaseType> = {
+export type Sqlite3Type = any;
+export type SQLiteDatabaseClass = any;
+export type SQLiteBasics<SQLiteDatabaseType> = {
     /**
      * Opens a new database connection
      */
@@ -35,14 +35,14 @@ export declare type SQLiteBasics<SQLiteDatabaseType> = {
      */
     journalMode: 'WAL' | 'WAL2' | 'DELETE' | 'TRUNCATE' | 'PERSIST' | 'MEMORY' | 'OFF' | '';
 };
-export declare type SQLiteStorageSettings = {
+export type SQLiteStorageSettings = {
     sqliteBasics: SQLiteBasics<any>;
 };
-export declare type SQLiteInstanceCreationOptions = {};
-export declare type SQLiteInternals = {
+export type SQLiteInstanceCreationOptions = {};
+export type SQLiteInternals = {
     database: SQLiteDatabaseClass;
 };
-export declare type SQLitePreparedQuery<RxDocType> = {
+export type SQLitePreparedQuery<RxDocType> = {
     schema: RxJsonSchema<RxDocumentData<RxDocType>>;
     mangoQuery: MangoQuery<RxDocType>;
     /**
@@ -53,8 +53,19 @@ export declare type SQLitePreparedQuery<RxDocType> = {
      * Looks like 'WHERE .... SORT BY ...'.
      */
     sqlQuery: SQLiteQueryWithParams;
+    /**
+     * The same query but without the ORDER BY part.
+     * Used in count-queries for better performance.
+     */
+    queryWithoutSort: string;
+    /**
+     * If the query cannot be transformed to SQL,
+     * because it contains non-SQLite-native operators
+     * like $regex, we have use a normal query matching.
+     */
+    nonImplementedOperator?: string;
 };
-export declare type SQLiteQueryWithParams = {
+export type SQLiteQueryWithParams = {
     query: string;
     /**
      * Some SQLite version allow to use named params like $docId
@@ -64,7 +75,7 @@ export declare type SQLiteQueryWithParams = {
      */
     params: any[];
 };
-export declare type SQLiteChangesCheckpoint = {
+export type SQLiteChangesCheckpoint = {
     id: string;
     lwt: number;
 };

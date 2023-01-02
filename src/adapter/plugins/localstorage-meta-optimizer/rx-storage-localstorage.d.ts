@@ -2,13 +2,13 @@ import { BulkWriteRow, ById, EventBulk, RxDocumentData, RxJsonSchema, RxStorage,
 import { RxStorageCountResult } from 'rxdb/dist/types/types';
 import { Observable } from 'rxjs';
 export declare const RX_STORAGE_NAME_LOCALSTORAGE = "localstorage";
-export declare type LocalstorageStorageInternals<RxDocType = any> = {
+export type LocalstorageStorageInternals<RxDocType = any> = {
     docsById: ById<RxDocumentData<RxDocType>>;
 };
-export declare type LocalstorageInstanceCreationOptions = {};
-export declare type LocalstorageStorageSettings = {};
-export declare type LocalstoragePreparedQuery<DocType> = DexiePreparedQuery<DocType>;
-export declare type ChangeStreamStoredData<RxDocType> = {
+export type LocalstorageInstanceCreationOptions = {};
+export type LocalstorageStorageSettings = {};
+export type LocalstoragePreparedQuery<DocType> = DexiePreparedQuery<DocType>;
+export type ChangeStreamStoredData<RxDocType> = {
     databaseInstanceToken: string;
     eventBulk: EventBulk<RxStorageChangeEvent<RxDocumentData<RxDocType>>, any>;
 };
