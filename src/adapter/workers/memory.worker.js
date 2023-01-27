@@ -1,0 +1,1 @@
+import{getRxStorageMemory as r}from"rxdb/plugins/storage-memory";import{exposeWorkerRxStorage as o}from"../plugins/storage-worker";o({storage:r({})});

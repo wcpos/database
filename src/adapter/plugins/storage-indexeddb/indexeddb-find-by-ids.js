@@ -1,0 +1,1 @@
+import{ensureNotFalsy as r,lastOfArray as e}from"rxdb";export function indexedDBFindByIds(o,n,d){for(var t=n.length,i=[],s=0;s<t;s++){var a=n[s];i.push(o.get(a))}var v={},f=r(e(i));return new Promise(((r,e)=>{f.onerror=e,f.onsuccess=()=>{for(var e=0;e<t;e++){var o=i[e].result;if(o){var n=o.i,s=o.d;s._deleted&&!d||(v[n]=s)}}r(v)}}))}
