@@ -1,1 +1,1 @@
-import{getRxStorageIndexedDB as r}from"../plugins/indexeddb";import{wrappedWorkerRxStorage as o}from"rxdb/plugins/worker";o({storage:r({})});
+import{getRxStorageIndexedDB as r}from"../plugins/storage-indexeddb";import{exposeWorkerRxStorage as o}from"../plugins/storage-worker";o({storage:r({})});
