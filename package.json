@@ -34,7 +34,7 @@
 		"@faker-js/faker": "^7.6.0",
 		"@types/jest": "^29.4.0",
 		"@types/lodash": "4.14.191",
-		"@types/uuid": "3.4.10",
+		"@types/uuid": "9.0.0",
 		"@wcpos/eslint-config": "*",
 		"@wcpos/tsconfig": "*",
 		"jest": "^29.4.3",
