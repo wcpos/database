@@ -1,0 +1,1 @@
+import{newRxError as r}from"rxdb";import{RXDB_VERSION as i}from"rxdb/plugins/utils";import{RXDB_PREMIUM_VERSION as e}from"./rxdb-premium-version";var o=!0;export function disableVersionCheck(){o=!1}export function checkVersion(){if(o&&i!==e)throw r("SNH",{name:"Version mismatch detected",args:{rxdbVersion:i,rxdbPremiumVersion:e}})}
