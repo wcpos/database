@@ -1,1 +1,125 @@
-import{PROMISE_RESOLVE_VOID as n,promiseWait as e,errorToPlainJson as t}from"rxdb";var r=new Map;export var RX_STORAGE_NAME_SQLITE="sqlite";export var SQLITE_VARIABLES_LIMIT=999;export function attachmentRowKey(n,e){return n+"||"+e}export function getDatabaseConnection(e,t){var o=r.get(t);if(o){if(o.sqliteBasics!==e)throw new Error("opened db with different creator method "+t);o.openConnections=o.openConnections+1}else o={database:e.open(t).then((async t=>(await e.setPragma(t,"synchronous","normal"),await Promise.all([e.setPragma(t,"page_size","32768"),e.journalMode?e.setPragma(t,"journal_mode",e.journalMode):n]),t))),sqliteBasics:e,openConnections:1},r.set(t,o);return o.database}export async function closeDatabaseConnection(n,e){var t=r.get(n);if(t&&(t.openConnections=t.openConnections-1,0===t.openConnections))return r.delete(n),t.database.then((n=>e.close(n)))}export function getIndexId(n){return"rxdb_"+n.map((n=>n.replace(/\./g,"_dot_"))).join("_")+"_idx"}export function getSQLiteInsertSQL(n,e,t){return{query:"\n        INSERT INTO "+n+"(\n            id,\n            revision,\n            deleted,\n            lastWriteTime,\n            data\n        ) VALUES (\n            ?,\n            ?,\n            ?,\n            ?,\n            json(?)\n        );\n    ",params:[t[e],t._rev,t._deleted?1:0,t._meta.lwt,JSON.stringify(t)]}}export function getSQLiteUpdateSQL(n,e,t){var r=t.document;return{query:'\n    UPDATE "'+n+'"\n    SET \n        revision = ?,\n        deleted = ?,\n        lastWriteTime = ?,\n        data = json(?)\n    WHERE\n        id = ?\n    ',params:[r._rev,r._deleted?1:0,r._meta.lwt,JSON.stringify(r),r[e]]}}export function getJsonExtract(n,e){return n===e?"id":"JSON_EXTRACT(data, '$."+e+"')"}export function mergeSQLiteQueries(n){var e=[],t=[];return n.forEach((n=>{e.push(n.query),t=t.concat(n.params)})),{query:e.join(" \r\n"),params:t}}export function getSQLiteFindByIdSQL(n,e,t){var r=t?"":" AND deleted = 0";return{query:'\n        SELECT * FROM "'+n+'"\n        WHERE id IN ('+new Array(e.length).fill("?").join(", ")+")\n        "+r+";\n    ",params:e}}export function isPlainObject(n){return"object"==typeof n&&n.constructor==Object}var o=new WeakMap;export async function sqliteTransaction(e,t,r,a){var i=o.get(e);return i||(i=n),i=i.then((async()=>{await openSqliteTransaction(e,t);var n=await r();await finishSqliteTransaction(e,t,n,a)})),o.set(e,i),i}export async function openSqliteTransaction(n,r){for(var o=!1;!o;)try{await r.run(n,{query:"BEGIN;",params:[]}),o=!0}catch(n){console.log("open transaction error (will retry):"),console.log(JSON.stringify(t(n))),console.dir(n),await e(0)}}export function finishSqliteTransaction(n,e,t,r){return e.run(n,{query:t+";",params:[]}).catch((n=>{throw r&&(console.error("cannot close transaction (mode: "+t+")"),console.log(JSON.stringify(r,null,4))),n}))}
+import { PROMISE_RESOLVE_VOID as n, promiseWait as e, errorToPlainJson as t } from 'rxdb';
+const r = new Map();
+export var RX_STORAGE_NAME_SQLITE = 'sqlite';
+export var SQLITE_VARIABLES_LIMIT = 999;
+export function attachmentRowKey(n, e) {
+	return n + '||' + e;
+}
+export function getDatabaseConnection(e, t) {
+	let o = r.get(t);
+	if (o) {
+		if (o.sqliteBasics !== e) throw new Error('opened db with different creator method ' + t);
+		o.openConnections = o.openConnections + 1;
+	} else
+		(o = {
+			database: e
+				.open(t)
+				.then(async (t) => {
+					await e.setPragma(t, 'synchronous', 'normal'),
+						await Promise.all([
+							e.setPragma(t, 'page_size', '32768'),
+							e.journalMode ? e.setPragma(t, 'journal_mode', e.journalMode) : n,
+						]),
+						t;
+				})
+				.then(() => {
+					return { name: t };
+				}),
+			sqliteBasics: e,
+			openConnections: 1,
+		}),
+			r.set(t, o);
+	return o.database;
+}
+export async function closeDatabaseConnection(n, e) {
+	const t = r.get(n);
+	if (t && ((t.openConnections = t.openConnections - 1), t.openConnections === 0))
+		return r.delete(n), t.database.then((n) => e.close(n));
+}
+export function getIndexId(n) {
+	return 'rxdb_' + n.map((n) => n.replace(/\./g, '_dot_')).join('_') + '_idx';
+}
+export function getSQLiteInsertSQL(n, e, t) {
+	return {
+		query:
+			'\n        INSERT INTO ' +
+			n +
+			'(\n            id,\n            revision,\n            deleted,\n            lastWriteTime,\n            data\n        ) VALUES (\n            ?,\n            ?,\n            ?,\n            ?,\n            json(?)\n        );\n    ',
+		params: [t[e], t._rev, t._deleted ? 1 : 0, t._meta.lwt, JSON.stringify(t)],
+	};
+}
+export function getSQLiteUpdateSQL(n, e, t) {
+	const r = t.document;
+	return {
+		query:
+			'\n    UPDATE "' +
+			n +
+			'"\n    SET \n        revision = ?,\n        deleted = ?,\n        lastWriteTime = ?,\n        data = json(?)\n    WHERE\n        id = ?\n    ',
+		params: [r._rev, r._deleted ? 1 : 0, r._meta.lwt, JSON.stringify(r), r[e]],
+	};
+}
+export function getJsonExtract(n, e) {
+	return n === e ? 'id' : "JSON_EXTRACT(data, '$." + e + "')";
+}
+export function mergeSQLiteQueries(n) {
+	let e = [],
+		t = [];
+	return (
+		n.forEach((n) => {
+			e.push(n.query), (t = t.concat(n.params));
+		}),
+		{ query: e.join(' \r\n'), params: t }
+	);
+}
+export function getSQLiteFindByIdSQL(n, e, t) {
+	const r = t ? '' : ' AND deleted = 0';
+	return {
+		query:
+			'\n        SELECT * FROM "' +
+			n +
+			'"\n        WHERE id IN (' +
+			new Array(e.length).fill('?').join(', ') +
+			')\n        ' +
+			r +
+			';\n    ',
+		params: e,
+	};
+}
+export function isPlainObject(n) {
+	return typeof n == 'object' && n.constructor == Object;
+}
+const o = new WeakMap();
+export async function sqliteTransaction(e, t, r, a) {
+	let i = o.get(e);
+	return (
+		i || (i = n),
+		(i = i.then(async () => {
+			await openSqliteTransaction(e, t);
+			const n = await r();
+			await finishSqliteTransaction(e, t, n, a);
+		})),
+		o.set(e, i),
+		i
+	);
+}
+export async function openSqliteTransaction(n, r) {
+	for (let o = !1; !o; )
+		try {
+			await r.run(n, { query: 'BEGIN;', params: [] }), (o = !0);
+		} catch (n) {
+			console.log('open transaction error (will retry):'),
+				console.log(JSON.stringify(t(n))),
+				console.dir(n),
+				await e(0);
+		}
+}
+export function finishSqliteTransaction(n, e, t, r) {
+	return e.run(n, { query: t + ';', params: [] }).catch((n) => {
+		throw (
+			(r &&
+				(console.error('cannot close transaction (mode: ' + t + ')'),
+				console.log(JSON.stringify(r, null, 4))),
+			n)
+		);
+	});
+}

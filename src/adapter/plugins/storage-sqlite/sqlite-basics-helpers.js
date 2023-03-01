@@ -1,1 +1,171 @@
-var e=new WeakMap;export function getSQLiteBasicsNode(r){var a=e.get(r);return a||(a={open:e=>Promise.resolve(new r.Database(e)),async run(e,r){if(!Array.isArray(r.params))throw console.dir(r),new Error("no params array given for query: "+r.query);await execSqlSQLiteNode(e,r,"run")},all:async(e,r)=>await execSqlSQLiteNode(e,r,"all"),setPragma:async(e,r,a)=>execSqlSQLiteNode(e,{query:"PRAGMA "+r+" = "+a,params:[]},"run"),close:e=>closeSQLiteDatabaseNode(e),journalMode:"WAL2"},e.set(r,a)),a}export function execSqlSQLiteNode(e,r,a){var s=!1,o=!1;return new Promise(((t,n)=>{s&&console.log("# execSqlSQLiteNode() "+r.query),e[a](r.query,r.params,((a,i)=>{if(o)throw new Error("callback called mutliple times "+r.query);o=!0,a?(s&&(console.log("---- ERROR RUNNING SQL:"),console.log(r.query),console.dir(r.params),console.dir(a),console.log("----")),n(a)):(s&&(console.log("execSql() result: "+e.eventNames()),console.log(r.query),console.dir(i),console.log("execSql() result:"),console.log(r.query),console.dir(r.params),console.log("execSql() result -------------------------")),t(i))}))}))}export function closeSQLiteDatabaseNode(e){return new Promise(((r,a)=>{var s=!1;e.close((e=>{if(s)throw new Error("close() callback called mutliple times");s=!0,e&&!e.message.includes("Database is closed")?a(e):r()}))}))}import{ensureNotFalsy as r}from"rxdb";var a=new WeakMap;export function getSQLiteBasicsCapacitor(s,o){var t=a.get(s);return t||(t={async open(e){var r=await s.createConnection(e,!1,"no-encryption",1);return await r.open(),r},async run(e,r){await e.run(r.query,r.params,!1)},async all(e,a){var s=await e.query(a.query,a.params);return r(s.values)},setPragma:async(e,r,a)=>e.execute("PRAGMA "+r+" = "+a,!1),close:e=>e.close(),journalMode:"android"===o.getPlatform()?"":"WAL"},e.set(s,t)),t}export var EMPTY_FUNCTION=()=>{};export function getSQLiteBasicsQuickSQLite(e){return{open:async r=>e({name:r}),all:async(e,r)=>(await e.executeAsync(r.query,r.params)).rows._array,run:async(e,r)=>e.executeAsync(r.query,r.params),setPragma:async(e,r,a)=>e.executeAsync("PRAGMA "+r+" = "+a,[]),close:async e=>{e.close(EMPTY_FUNCTION,EMPTY_FUNCTION)},journalMode:""}}export function getSQLiteBasicsExpoSQLite(e,r=((e,r)=>{})){return{open:async r=>Promise.resolve(e(r)),all:async(e,a)=>(r("getSQLiteBasicsExpoSQLite.all(): "+a.query),new Promise(((s,o)=>{e.exec([{sql:a.query,args:a.params}],!1,((e,t)=>{if(e)return r("getSQLiteBasicsExpoSQLite.all() ERROR 1 : "+a.query),o(e);if(Array.isArray(t)){var n=t[0];return Object.prototype.hasOwnProperty.call(n,"rows")?(r("getSQLiteBasicsExpoSQLite.all() DONE : "+t),s(n.rows)):(r("getSQLiteBasicsExpoSQLite.all() ERROR 2 : "+a.query),o(n.error))}return o(new Error("getSQLiteBasicsExpoSQLite.all() response is not an array: "+t))}))}))),run:async(e,a)=>(r("getSQLiteBasicsExpoSQLite.run() : "+a.query),r(JSON.stringify(a.params,null,4)),new Promise(((s,o)=>{e.exec([{sql:a.query,args:a.params}],!1,((e,a)=>e?(r("getSQLiteBasicsExpoSQLite.run() ERROR 1 : ",e),o(e)):Array.isArray(a)&&a[0]&&a[0].error?(r("getSQLiteBasicsExpoSQLite.run() ERROR 2 : ",a),o(a)):(r("getSQLiteBasicsExpoSQLite.run() DONE : "+JSON.stringify(a)),void s(a))))}))),close:async e=>e.closeAsync(),journalMode:""}}export function getSQLiteBasicsWebSQL(e,r=((e,r)=>{})){return{open:async r=>Promise.resolve(e(r)),all:async(e,a)=>(r("getSQLiteBasicsWebSQL.all(): "+a.query),new Promise(((s,o)=>{e.transaction((function(e){e.executeSql(a.query,a.params,((e,a)=>{var o=Array.from(a.rows);r("getSQLiteBasicsWebSQL.all() DONE: "+o),s(o)}),(e=>o(e)))}))}))),run:async(e,a)=>(r("getSQLiteBasicsWebSQL.run(): "+a.query),new Promise(((s,o)=>{e.transaction((function(e){e.executeSql(a.query,a.params,((e,o)=>{r("getSQLiteBasicsWebSQL.run() DONE: "+a.query),s()}),(e=>o(e)))}))}))),close:async e=>e.closeAsync(),journalMode:""}}
+import { ensureNotFalsy as r } from 'rxdb';
+const e = new WeakMap();
+export function getSQLiteBasicsNode(r) {
+	let a = e.get(r);
+	return (
+		a ||
+			((a = {
+				open: (e) => Promise.resolve(new r.Database(e)),
+				async run(e, r) {
+					if (!Array.isArray(r.params))
+						throw (console.dir(r), new Error('no params array given for query: ' + r.query));
+					await execSqlSQLiteNode(e, r, 'run');
+				},
+				all: async (e, r) => await execSqlSQLiteNode(e, r, 'all'),
+				setPragma: async (e, r, a) =>
+					execSqlSQLiteNode(e, { query: 'PRAGMA ' + r + ' = ' + a, params: [] }, 'run'),
+				close: (e) => closeSQLiteDatabaseNode(e),
+				journalMode: 'WAL2',
+			}),
+			e.set(r, a)),
+		a
+	);
+}
+export function execSqlSQLiteNode(e, r, a) {
+	let s = !1,
+		o = !1;
+	return new Promise((t, n) => {
+		s && console.log('# execSqlSQLiteNode() ' + r.query),
+			e[a](r.query, r.params, (a, i) => {
+				if (o) throw new Error('callback called mutliple times ' + r.query);
+				(o = !0),
+					a
+						? (s &&
+								(console.log('---- ERROR RUNNING SQL:'),
+								console.log(r.query),
+								console.dir(r.params),
+								console.dir(a),
+								console.log('----')),
+						  n(a))
+						: (s &&
+								(console.log('execSql() result: ' + e.eventNames()),
+								console.log(r.query),
+								console.dir(i),
+								console.log('execSql() result:'),
+								console.log(r.query),
+								console.dir(r.params),
+								console.log('execSql() result -------------------------')),
+						  t(i));
+			});
+	});
+}
+export function closeSQLiteDatabaseNode(e) {
+	return new Promise((r, a) => {
+		let s = !1;
+		e.close((e) => {
+			if (s) throw new Error('close() callback called mutliple times');
+			(s = !0), e && !e.message.includes('Database is closed') ? a(e) : r();
+		});
+	});
+}
+const a = new WeakMap();
+export function getSQLiteBasicsCapacitor(s, o) {
+	let t = a.get(s);
+	return (
+		t ||
+			((t = {
+				async open(e) {
+					const r = await s.createConnection(e, !1, 'no-encryption', 1);
+					return await r.open(), r;
+				},
+				async run(e, r) {
+					await e.run(r.query, r.params, !1);
+				},
+				async all(e, a) {
+					const s = await e.query(a.query, a.params);
+					return r(s.values);
+				},
+				setPragma: async (e, r, a) => e.execute('PRAGMA ' + r + ' = ' + a, !1),
+				close: (e) => e.close(),
+				journalMode: o.getPlatform() === 'android' ? '' : 'WAL',
+			}),
+			e.set(s, t)),
+		t
+	);
+}
+export var EMPTY_FUNCTION = () => {};
+export function getSQLiteBasicsQuickSQLite(e) {
+	return {
+		open: async (r) => e({ name: r }),
+		all: async (e, r) => (await e.executeAsync(r.query, r.params)).rows._array,
+		run: async (e, r) => e.executeAsync(r.query, r.params),
+		setPragma: async (e, r, a) => e.executeAsync('PRAGMA ' + r + ' = ' + a, []),
+		close: async (e) => {
+			e.close(EMPTY_FUNCTION, EMPTY_FUNCTION);
+		},
+		journalMode: '',
+	};
+}
+export function getSQLiteBasicsExpoSQLite(e, r = (e, r) => {}) {
+	return {
+		open: async (r) => Promise.resolve(e(r)),
+		all: async (e, a) => (
+			r('getSQLiteBasicsExpoSQLite.all(): ' + a.query),
+			new Promise((s, o) => {
+				e.exec([{ sql: a.query, args: a.params }], !1, (e, t) => {
+					if (e) return r('getSQLiteBasicsExpoSQLite.all() ERROR 1 : ' + a.query), o(e);
+					if (Array.isArray(t)) {
+						const n = t[0];
+						return Object.prototype.hasOwnProperty.call(n, 'rows')
+							? (r('getSQLiteBasicsExpoSQLite.all() DONE : ' + t), s(n.rows))
+							: (r('getSQLiteBasicsExpoSQLite.all() ERROR 2 : ' + a.query), o(n.error));
+					}
+					return o(new Error('getSQLiteBasicsExpoSQLite.all() response is not an array: ' + t));
+				});
+			})
+		),
+		run: async (e, a) => (
+			r('getSQLiteBasicsExpoSQLite.run() : ' + a.query),
+			r(JSON.stringify(a.params, null, 4)),
+			new Promise((s, o) => {
+				e.exec([{ sql: a.query, args: a.params }], !1, (e, a) =>
+					e
+						? (r('getSQLiteBasicsExpoSQLite.run() ERROR 1 : ', e), o(e))
+						: Array.isArray(a) && a[0] && a[0].error
+						? (r('getSQLiteBasicsExpoSQLite.run() ERROR 2 : ', a), o(a))
+						: (r('getSQLiteBasicsExpoSQLite.run() DONE : ' + JSON.stringify(a)), void s(a))
+				);
+			})
+		),
+		close: async (e) => e.closeAsync(),
+		journalMode: '',
+	};
+}
+export function getSQLiteBasicsWebSQL(e, r = (e, r) => {}) {
+	return {
+		open: async (r) => Promise.resolve(e(r)),
+		all: async (e, a) => (
+			r('getSQLiteBasicsWebSQL.all(): ' + a.query),
+			new Promise((s, o) => {
+				e.transaction(function (e) {
+					e.executeSql(
+						a.query,
+						a.params,
+						(e, a) => {
+							const o = Array.from(a.rows);
+							r('getSQLiteBasicsWebSQL.all() DONE: ' + o), s(o);
+						},
+						(e) => o(e)
+					);
+				});
+			})
+		),
+		run: async (e, a) => (
+			r('getSQLiteBasicsWebSQL.run(): ' + a.query),
+			new Promise((s, o) => {
+				e.transaction(function (e) {
+					e.executeSql(
+						a.query,
+						a.params,
+						(e, o) => {
+							r('getSQLiteBasicsWebSQL.run() DONE: ' + a.query), s();
+						},
+						(e) => o(e)
+					);
+				});
+			})
+		),
+		close: async (e) => e.closeAsync(),
+		journalMode: '',
+	};
+}
