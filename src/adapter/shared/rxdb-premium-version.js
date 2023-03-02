@@ -1,1 +1,1 @@
-export var RXDB_PREMIUM_VERSION="14.1.2";
+export var RXDB_PREMIUM_VERSION="14.1.5";
