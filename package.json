@@ -22,7 +22,7 @@
     "@orama/orama": "^2.0.1",
     "@orama/plugin-data-persistence": "^2.0.1",
     "c-promise2": "^0.13.12",
-    "expo-sqlite": "~13.2.1",
+    "expo-sqlite": "~13.3.0",
     "fast-text-encoding": "^1.0.6",
     "lodash": "^4.17.21",
     "observable-hooks": "4.2.3",
