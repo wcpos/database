@@ -28,7 +28,7 @@
     "observable-hooks": "4.2.3",
     "react": "18.2.0",
     "rxdb": "14.17.1",
-    "rxdb-premium": "14.17.0",
+    "rxdb-premium": "15.12.0",
     "rxjs": "7.8.1",
     "uuid": "9.0.1"
   },
